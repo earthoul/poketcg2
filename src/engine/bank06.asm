@@ -4245,7 +4245,7 @@ SetupText_Printer:
 	ld a, HIGH(sGfxBuffer1)
 	ld [wTextTileBaseAddressHi], a
 	xor a
-	ld [wTextTileIndexSignednessAdjust], a
+	ld [wTextTileIndexSignednessState], a
 	ret
 
 ; switches to CGB normal speed, resets serial

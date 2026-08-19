@@ -1074,7 +1074,7 @@ wCurTextTile:: ; cd6e
 	ds $1
 
 ; text tile location
-; must use the same mode as wTextTileIndexSignednessAdjust
+; must use the same mode as wTextTileIndexSignednessState
 ; HIGH(v*Tiles1)    = default (LCDC_BLOCK21)
 ; HIGH(sGfxBuffer1) = printer
 wTextTileBaseAddressHi:: ; cd6f
@@ -1084,7 +1084,7 @@ wTextTileBaseAddressHi:: ; cd6f
 ; must use the same mode as wTextTileBaseAddressHi
 ; NUM_SIGNED   = default (LCDC_BLOCK21)
 ; NUM_UNSIGNED = printer, as if LCDC_BLOCK01
-wTextTileIndexSignednessAdjust:: ; cd70
+wTextTileIndexSignednessState:: ; cd70
 	ds $1
 
 ; if 0, text lines are separated by a blank line

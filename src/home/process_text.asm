@@ -151,7 +151,7 @@ SetupText::
 	ld a, HIGH(v0Tiles1)
 	ld [wTextTileBaseAddressHi], a
 	ld a, NUM_SIGNED
-	ld [wTextTileIndexSignednessAdjust], a
+	ld [wTextTileIndexSignednessState], a
 	ld hl, wc600
 .clear_loop
 	xor a
@@ -596,9 +596,9 @@ CopyHalfWidthCharacterToDE::
 	sub HALFWIDTH_CHAR_START
 	ld l, a
 	ld h, $0
+REPT 3 ; *TILE_SIZE_1BPP
 	add hl, hl
-	add hl, hl
-	add hl, hl
+ENDR
 	ld bc, HalfWidthFont
 	add hl, bc
 	ld b, TILE_SIZE_1BPP
@@ -621,11 +621,11 @@ CreateFullWidthFontTile_ConvertToTileDataAddress::
 	pop bc
 ;	fallthrough
 
-; given a tile number in b, return its tile address in hl, and return c = TILE_SIZE
+; for b = tile number, return hl = its tile address, and c = TILE_SIZE
 ; default: VRAM, LCDC_BLOCK21
 ; printer: SRAM, as if LCDC_BLOCK01
 ConvertTileNumberToTileDataAddress::
-	ld hl, wTextTileIndexSignednessAdjust
+	ld hl, wTextTileIndexSignednessState
 	ld a, b
 	xor [hl]
 	ld h, $0
@@ -749,7 +749,7 @@ MoveTextTileCacheEntryToFront::
 	xor a
 	ld [wPendingHalfWidthChar], a
 	ldh a, [hTextTileCacheHead]
-	ld l, a              ; l ← [hTextTileCacheHead]; index to linked-list head
+	ld l, a              ; l ← [hTextTileCacheHead] ; index to linked-list head
 .loop
 	ld h, HIGH(wc600)    ;
 	ld a, [hl]           ; a ← key1[l]            ;
@@ -773,7 +773,7 @@ MoveTextTileCacheEntryToFront::
 	ld b, HIGH(wc900)
 	ld a, l
 	ld [bc], a           ; prev[i0] ← i
-	ldh [hTextTileCacheHead], a ; [hTextTileCacheHead] ← i; update linked-list head
+	ldh [hTextTileCacheHead], a ; [hTextTileCacheHead] ← i ; update linked-list head
 	ld h, HIGH(wc900)
 	ld b, [hl]
 	ld [hl], $0          ; prev[i] ← 0
