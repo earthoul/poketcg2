@@ -110,7 +110,7 @@ LoadDuelCheckPokemonScreenTiles::
 ; loads the 8 tiles that make up the border of the main duel menu as well as the border
 ; of a large card picture (displayed after drawing the card or placing it in the arena).
 LoadCardOrDuelMenuBorderTiles::
-	ld hl, DuelMenuAndCardPicBorderTiles
+	ld hl, CardOrDuelMenuBorderGraphics
 	ld de, v0Tiles1 + $50 tiles
 	ld b, NUM_CARD_OR_DUEL_BORDER_TILES
 	jr CopyFontsOrDuelGraphicsTiles
@@ -211,7 +211,7 @@ LoadCardSymbolFontTilesToSRAM::
 	ld b, $30
 	call CopyFontsOrDuelGraphicsTiles
 ; followed by text box frame tiles
-	ld hl, DuelMenuAndCardPicBorderTiles
+	ld hl, CardOrDuelMenuBorderGraphics
 	ld de, sGfxBuffer1 + $30 tiles
 	ld b, NUM_CARD_OR_DUEL_BORDER_TILES
 	call CopyFontsOrDuelGraphicsTiles

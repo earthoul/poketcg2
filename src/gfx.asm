@@ -165,8 +165,8 @@ DuelSetupScreenGraphics::
 DuelCoinTossResultSymbolGraphics::
 	INCBIN "gfx/duel/coin_toss_result_symbols.2bpp"
 
-DuelMenuAndCardPicBorderTiles::
-	INCBIN "gfx/duel/menu_card_pic_border.2bpp"
+CardOrDuelMenuBorderGraphics::
+	INCBIN "gfx/duel/borders.2bpp"
 
 DuelDrawCardsScreenGraphics::
 	INCBIN "gfx/duel/draw_cards_screen.2bpp"
