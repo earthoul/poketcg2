@@ -87,15 +87,16 @@ ENDR
 LoadDuelDrawCardsScreenTiles::
 	ld hl, DuelDrawCardsScreenGraphics
 	ld de, v0Tiles1 + $74 tiles
-	ld b, 2 * REGULAR_ICON_TILE_SIZE
+	ld b, NUM_DRAW_CARDS_SCREEN_ICON_TILES
 	jp CopyFontsOrDuelGraphicsTiles
 
-; loads the basic, stage1, and stage2 symbols shown in the check Pokemon screens
-LoadPokemonStageSymbolTiles::
+; load the basic, stage1, and stage2 icons shown in the check Pokemon screens
+LoadDuelCheckPokemonScreenTiles_OnlyPokemonStages::
 	ld b, NUM_CHECK_POKEMON_SCREEN_STAGE_ICON_TILES
 	jr LoadDuelCheckPokemonScreenTiles.got_num_tiles
 
-; LoadPokemonStageSymbolTiles, plus the ACT / BPx tiles
+; load all tiles in the check Pokemon screens
+; (Pokemon stage icons, plus the ACT / BPx tiles)
 LoadDuelCheckPokemonScreenTiles::
 	ld b, NUM_CHECK_POKEMON_SCREEN_ICON_TILES
 ;	fallthrough
@@ -112,13 +113,13 @@ LoadDuelCheckPokemonScreenTiles::
 LoadCardOrDuelMenuBorderTiles::
 	ld hl, CardOrDuelMenuBorderGraphics
 	ld de, v0Tiles1 + $50 tiles
-	ld b, NUM_CARD_OR_DUEL_BORDER_TILES
+	ld b, NUM_CARD_OR_DUEL_MENU_BORDER_TILES
 	jr CopyFontsOrDuelGraphicsTiles
 
-; loads the graphics of HEADER_* in a to display a picture of a card
-; after drawing it or placing it in the arena
+; loads the graphics of HEADER_* in a
+; to display a picture of a card after drawing it or placing it in the arena
 LoadCardTypeHeaderTiles::
-	ld d, a
+	ld d, a ; * CARD_HEADER_TILE_SIZE tiles
 	ld e, 0
 	ld hl, DuelCardHeaderGraphics - $4000
 	add hl, de
@@ -130,7 +131,7 @@ LoadCardTypeHeaderTiles::
 
 ; loads the symbols that are displayed near the names of a list of cards in the hand or discard pile
 LoadDuelCardSymbolTiles::
-	ld hl, DuelCgbSymbolGraphics - $4000
+	ld hl, DuelCgbCardSymbolGraphics - $4000
 	ld de, v0Tiles1 + $50 tiles
 	ld b, NUM_CARD_TYPE_ICON_TILES
 	jr CopyFontsOrDuelGraphicsTiles
@@ -138,14 +139,15 @@ LoadDuelCardSymbolTiles::
 ; loads the symbols for Stage 1 Pkmn card, Stage 2 Pkmn card, and Trainer card.
 ; unlike LoadDuelCardSymbolTiles excludes the symbols for Basic Pkmn and all energies.
 LoadDuelCardSymbolTiles2::
-	ld hl, DuelCgbSymbolGraphics + ICON_TILE_EVO_OR_TRAINER_OFFSET tiles - $4000
+	ld hl, DuelCgbCardSymbolGraphics + ICON_TILE_EVO_OR_TRAINER_OFFSET tiles - $4000
 	ld de, v0Tiles1 + ($50 + ICON_TILE_EVO_OR_TRAINER_OFFSET) tiles
 	ld b, NUM_EVO_OR_TRAINER_ICON_TILES
 	jr CopyFontsOrDuelGraphicsTiles
 
-; LoadDuelPlayAreaScreenTiles, plus face-down arena cards and prize cards
-; for the "Placing the prizes..." screen
-LoadDuelPlayAreaScreenTiles_Setup::
+; load the tiles for the face-down arena cards and prize cards
+; for the "Placing the prizes..." screen,
+; plus the ones for the play area screen
+LoadPlacingThePrizesScreenTiles::
 	ld hl, DuelSetupPalette - $4000
 	ld de, wBackgroundPalettesCGB + 5 palettes
 	ld c, PAL_SIZE
@@ -156,10 +158,8 @@ LoadDuelPlayAreaScreenTiles_Setup::
 	call CopyFontsOrDuelGraphicsTiles
 ; fallthrough
 
-; loads the tiles for the player's / opponent's Play Area screen
-; (uses a separate set of tiles on CGB vs DMG/SGB)
-; harmless bug: loads 3 more tiles from the next graphic set
-; because unlike tcg1 it's no longer padded with $0 (blank white tiles)
+; load the tiles for the player's / opponent's Play Area screen
+; harmless bug: 3 more tiles get loaded from the next graphic set
 LoadDuelPlayAreaScreenTiles::
 	ld hl, DuelCgbPlayAreaScreenGraphics
 	ld a, [wConsole]
@@ -201,21 +201,21 @@ CopyFontsOrDuelGraphicsTiles::
 	call BankpopROM
 	ret
 
-; loads the tiles used to render a card's info into the SRAM gfx buffers:
-; the symbols font + duel menu/card-pic border into sGfxBuffer1, the loaded
-; card's type symbol after them, and the DMG/SGB card symbols into sGfxBuffer4.
-LoadCardSymbolFontTilesToSRAM::
-; first 48 glyphs of symbols fonts to sGfxBuffer1
+; load the card data tiles for the printer into sram:
+;   PRINTER_TILE_* to sGfxBuffer1;
+;   all card symbols to sGfxBuffer4 + $10 tiles
+LoadPrinterCardDataTiles::
+	; symbols font
 	ld hl, SymbolsFont - $4000
-	ld de, sGfxBuffer1
-	ld b, $30
+	ld de, sGfxBuffer1 + PRINTER_TILE_SYMBOLS tiles
+	ld b, NUM_PRINTER_SYM_CHARS
 	call CopyFontsOrDuelGraphicsTiles
-; followed by text box frame tiles
+	; borders
 	ld hl, CardOrDuelMenuBorderGraphics
-	ld de, sGfxBuffer1 + $30 tiles
-	ld b, NUM_CARD_OR_DUEL_BORDER_TILES
+	ld de, sGfxBuffer1 + PRINTER_TILE_BORDERS tiles
+	ld b, NUM_CARD_OR_DUEL_MENU_BORDER_TILES
 	call CopyFontsOrDuelGraphicsTiles
-; followed by the selected card type symbol tile
+	; card symbol of the selected card
 	call GetCardSymbolData
 	sub CARD_TYPE_ICON_TILE_START
 	ld l, a
@@ -223,13 +223,13 @@ LoadCardSymbolFontTilesToSRAM::
 REPT 4 ; *= TILE_SIZE
 	add hl, hl
 ENDR
-	ld de, DuelDmgSgbSymbolGraphics - $4000
+	ld de, DuelDmgSgbCardSymbolGraphics - $4000
 	add hl, de
-	ld de, sGfxBuffer1 + ($30 + NUM_CARD_OR_DUEL_BORDER_TILES) tiles
+	ld de, sGfxBuffer1 + ($30 + NUM_CARD_OR_DUEL_MENU_BORDER_TILES) tiles
 	ld b, REGULAR_ICON_TILE_SIZE
 	call CopyFontsOrDuelGraphicsTiles
-; DMG/SGB card symbols to sGfxBuffer4
-	ld hl, DuelDmgSgbSymbolGraphics - $4000
+	; all card symbols
+	ld hl, DuelDmgSgbCardSymbolGraphics - $4000
 	ld de, sGfxBuffer4 + $10 tiles
 	ld b, NUM_CARD_TYPE_ICON_TILES
 	jr CopyFontsOrDuelGraphicsTiles

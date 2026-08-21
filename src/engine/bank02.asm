@@ -2204,7 +2204,7 @@ _DrawPlayAreaToPlacePrizeCards::
 	call ZeroObjectPositions
 	call EmptyScreen
 	call LoadSymbolsFont
-	call LoadDuelPlayAreaScreenTiles_Setup
+	call LoadPlacingThePrizesScreenTiles
 	bank1call SetDefaultPalettes
 
 	ldh a, [hWhoseTurn]

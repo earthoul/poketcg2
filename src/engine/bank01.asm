@@ -993,7 +993,7 @@ DisplayAttachedEnergyMenu:
 	call SortCardsInDuelTempListByID
 	call EmptyScreen
 	call LoadDuelCardSymbolTiles
-	call LoadPokemonStageSymbolTiles
+	call LoadDuelCheckPokemonScreenTiles_OnlyPokemonStages
 	call LoadDuelScreenBGPalettes
 	call FlushAllPalettesIfNotDMG
 	ld a, [wAttachedEnergyMenuPlayAreaLocation]

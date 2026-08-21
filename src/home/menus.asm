@@ -619,7 +619,8 @@ OneByteNumberToTxSymbol::
 	pop hl
 	ret
 
-; translate the TYPE_* constant in wLoadedCard1Type to an index for CardSymbolTable
+; translate the TYPE_* constant in wLoadedCard1Type
+; to the CARD_SYMBOL_* constant for CardSymbolTable
 CardTypeToSymbolID::
 	ld a, [wLoadedCard1Type]
 	cp TYPE_TRAINER
@@ -637,8 +638,8 @@ CardTypeToSymbolID::
 	add CARD_SYMBOL_BASIC_POKEMON
 	ret
 
-; return the entry in CardSymbolTable of the TYPE_* constant in wLoadedCard1Type
-; also return the first byte of said entry (starting tile number) in a
+; translate the TYPE_* constant in wLoadedCard1Type
+; to the ICON_TILE_* constant
 GetCardSymbolData::
 	call CardTypeToSymbolID
 	add a

@@ -135,11 +135,11 @@ DuelGraphics::
 DuelCardHeaderGraphics::
 	INCBIN "gfx/duel/card_type_headers.2bpp"
 
-DuelCgbSymbolGraphics::
-	INCBIN "gfx/duel/cgb_symbols.2bpp"
+DuelCgbCardSymbolGraphics::
+	INCBIN "gfx/duel/cgb_card_symbols.2bpp"
 
-DuelDmgSgbSymbolGraphics::
-	INCBIN "gfx/duel/dmg_sgb_symbols.2bpp"
+DuelDmgSgbCardSymbolGraphics::
+	INCBIN "gfx/duel/dmg_sgb_card_symbols.2bpp"
 
 RealCardSetSymbolGraphics::
 	INCBIN "gfx/duel/real_card_set_symbols.2bpp"
@@ -154,13 +154,15 @@ DuelCheckPokemonScreenGraphics::
 
 DuelCgbPlayAreaScreenGraphics::
 	INCBIN "gfx/duel/cgb_play_area_screen.2bpp"
+	INCBIN "gfx/duel/cgb_play_area_screen_29.2bpp"
 
 DuelDmgSgbPlayAreaScreenGraphics::
 	INCBIN "gfx/duel/dmg_sgb_play_area_screen.2bpp"
+	INCBIN "gfx/duel/dmg_sgb_play_area_screen_29.2bpp"
 
 DuelSetupScreenGraphics::
-	INCBIN "gfx/duel/setup_arena_card_back.2bpp"
-	INCBIN "gfx/duel/setup_placing_prizes.2bpp"
+	INCBIN "gfx/duel/setup_arena_card.2bpp"
+	INCBIN "gfx/duel/setup_prize_card.2bpp"
 
 DuelCoinTossResultSymbolGraphics::
 	INCBIN "gfx/duel/coin_toss_result_symbols.2bpp"

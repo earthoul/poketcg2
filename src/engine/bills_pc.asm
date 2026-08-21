@@ -78,7 +78,7 @@ _BillsPC:
 	call EmptyScreen
 	ld hl, CardOrDuelMenuBorderGraphics
 	ld de, v0Tiles2 + $30 tiles
-	ld b, NUM_CARD_OR_DUEL_BORDER_TILES
+	ld b, NUM_CARD_OR_DUEL_MENU_BORDER_TILES
 	call CopyFontsOrDuelGraphicsTiles
 	call LoadCardOrDuelMenuBorderTiles
 	ld hl, .tile_data
