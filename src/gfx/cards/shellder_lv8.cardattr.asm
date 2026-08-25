@@ -1,3 +1,49 @@
-	db $40, $40, $40, $80, $80, $80, $80, $69, $69, $a9, $80, $00, $00, $a6, $80, $40
-	db $40, $a3, $23, $00, $80, $00, $80, $5f, $5f, $80, $00, $00, $00, $00, $9a, $5a
-	db $40, $40, $00, $17, $17, $17, $97, $57, $57, $40, $80, $80, $00, $80, $40, $40
+	cardattrs_start
+	cardattr 1
+	cardattr 1
+	cardattr 1
+	cardattr 2
+	cardattr 2
+	cardattr 2
+	cardattr 2
+	cardattr 1, HAS_ALT_TILE
+	cardattr 1, HAS_ALT_TILE
+	cardattr 2, HAS_ALT_TILE
+	cardattr 2
+	cardattr 0
+	cardattr 0
+	cardattr 2, HAS_ALT_TILE
+	cardattr 2
+	cardattr 1
+	cardattr 1
+	cardattr 2, HAS_ALT_TILE
+	cardattr 0, HAS_ALT_TILE
+	cardattr 0
+	cardattr 2
+	cardattr 0
+	cardattr 2
+	cardattr 1, HAS_ALT_TILE
+	cardattr 1, HAS_ALT_TILE
+	cardattr 2
+	cardattr 0
+	cardattr 0
+	cardattr 0
+	cardattr 0
+	cardattr 2, HAS_ALT_TILE
+	cardattr 1, HAS_ALT_TILE
+	cardattr 1
+	cardattr 1
+	cardattr 0
+	cardattr 0, HAS_ALT_TILE
+	cardattr 0, HAS_ALT_TILE
+	cardattr 0, HAS_ALT_TILE
+	cardattr 2, HAS_ALT_TILE
+	cardattr 1, HAS_ALT_TILE
+	cardattr 1, HAS_ALT_TILE
+	cardattr 1
+	cardattr 2
+	cardattr 2
+	cardattr 0
+	cardattr 2
+	cardattr 1
+	cardattr 1
