@@ -104,7 +104,8 @@ MACRO? gfx
 ENDM
 
 ; card gfx attr
-; TODO: revamp the brute-force python builder to allow these macros
+; TODO: use it
+
 ; MACRO? cardattrs_start
 ; 	DEF _current_card_tile_idx = 0
 ; 	DEF _current_alt_card_tile_idx = 0

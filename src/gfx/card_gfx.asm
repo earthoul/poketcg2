@@ -12,8 +12,7 @@ SECTION "Card Gfx 1", ROMX
 ;                  built from <name>.png
 ; - <Name>CardGfxExtra: printer-only alt tiles in <name>_extra.2bpp
 ; banks padded with $0 instead of $ff
-; TODO: revamp the brute-force tools/derive_*_tiles.py builder
-; to allow cardattr macros
+; TODO: refactor cardattr with macros
 CardGraphics::
 
 GrassEnergyCardGfx::
